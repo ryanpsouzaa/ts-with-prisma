@@ -9,18 +9,18 @@ export const app = fastify();
 
 app.register(appRoutes);
 
-app.setErrorHandler((error, request, reply) => {
+app.setErrorHandler((error, _, reply) => {
   if (error instanceof GeneralErrorResponse) {
-    return {
+    return reply.status(error.statusCode).send({
       statusCode: error.statusCode,
       code: error.apiCode,
       message: error.message,
       errors: error.errors,
-    };
+    });
   } else {
-    return {
+    return reply.status(500).send({
       statusCode: statusCode.INTERNAL_SERVER_ERROR,
       message: ERRORS.ERROR_GENERAL.INTERNAL_SERVER_ERROR,
-    };
+    });
   }
 });
