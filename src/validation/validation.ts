@@ -1,7 +1,7 @@
 import { z, type ZodObject } from 'zod';
 import { GeneralErrorResponse } from '../exceptions/GeneralErrorResponse';
 import { statusCode } from '../constants/statusCode';
-import { ERRORS } from '../constants/ERRORS';
+import { ERRORS } from '../constants/errors';
 
 export function validateRequestBody(data: any, schema: ZodObject): any {
   try {

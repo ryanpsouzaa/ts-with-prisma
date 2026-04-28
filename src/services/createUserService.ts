@@ -4,7 +4,7 @@ import { logger } from '../config/logger';
 import { randomUUID } from 'node:crypto';
 import { hash } from 'bcryptjs';
 import { GeneralErrorResponse } from '../exceptions/GeneralErrorResponse';
-import { ERRORS } from '../constants/ERRORS';
+import { ERRORS } from '../constants/errors';
 import { statusCode } from '../constants/statusCode';
 
 export class CreateUserService {
