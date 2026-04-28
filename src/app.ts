@@ -1,6 +1,19 @@
 import fastify from 'fastify';
-import { PrismaClient } from '@prisma/client';
+
+import { appRoutes } from './http/routes/routes';
+import { GeneralErrorResponse } from './exceptions/GeneralErrorResponse';
 
 export const app = fastify();
 
-const prisma = new PrismaClient();
+app.register(appRoutes);
+
+app.setErrorHandler((error, request, reply) => {
+  if (error instanceof GeneralErrorResponse) {
+    return {
+      statusCode: error.statusCode,
+      code: error.apiCode,
+      message: error.message,
+      errors: error.errors,
+    };
+  }
+});
