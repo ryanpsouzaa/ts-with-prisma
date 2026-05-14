@@ -14,6 +14,14 @@ const ERROR_GENERAL = {
     apiCode: 'api-102',
     message: 'An unexpected error occurred.',
   },
+  INVALID_CREDENTIALS: {
+    apiCode: 'api-103',
+    message: 'Invalid email or password.',
+  },
+  UNAUTHORIZED: {
+    apiCode: 'api-104',
+    message: 'Session expired or invalid. Please log in again.',
+  },
 };
 
 export const ERRORS = {

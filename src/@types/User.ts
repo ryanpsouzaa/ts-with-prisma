@@ -1,5 +1,10 @@
-export interface createUserRequest {
+export interface CreateUserRequest {
   name: string;
+  email: string;
+  password: string;
+}
+
+export interface AuthenticateUserRequest {
   email: string;
   password: string;
 }

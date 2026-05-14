@@ -1,19 +1,18 @@
+import type { CreateUserRequest } from '../@types/User';
 import { prisma } from '../database/prismaConnection';
-import type { UserModel } from '../@types/User';
 import type { UserRepository } from './UserRepository';
 
 export class PrismaUserRepository implements UserRepository {
-  async create(userData: UserModel) {
-    await prisma.user.create({
+  async create(userData: CreateUserRequest) {
+    const userCreated = await prisma.user.create({
       data: {
-        id: userData.id,
         name: userData.name,
         email: userData.email,
-        password_hash: userData.password_hash,
+        passwordHash: userData.password,
       },
     });
 
-    return userData.id;
+    return userCreated.id;
   }
 
   async findUniqueByEmail(email: string) {

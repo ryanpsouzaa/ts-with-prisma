@@ -1,16 +1,16 @@
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { logger } from '../../config/logger';
-import { createUserRequestSchema } from '../../validation/createUserRequest';
+import { createUserRequestSchema } from '../../validation/schemas/createUserRequest';
 import { CreateUserService } from '../../services/createUserService';
 import { PrismaUserRepository } from '../../repositories/PrismaUserRepository';
 import { validateRequestBody } from '../../validation/validation';
-import type { createUserRequest } from '../../@types/User';
+import type { CreateUserRequest } from '../../@types/User';
 
 export async function createUser(request: FastifyRequest, reply: FastifyReply) {
   logger.info('[Start] IN - createUser');
 
   try {
-    const body: createUserRequest = validateRequestBody(
+    const body: CreateUserRequest = validateRequestBody(
       request.body,
       createUserRequestSchema,
     );

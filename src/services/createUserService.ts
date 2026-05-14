@@ -1,7 +1,6 @@
-import type { createUserRequest, UserModel } from '../@types/User';
+import type { CreateUserRequest } from '../@types/User';
 import type { UserRepository } from '../repositories/UserRepository';
 import { logger } from '../config/logger';
-import { randomUUID } from 'node:crypto';
 import { hash } from 'bcryptjs';
 import { GeneralErrorResponse } from '../exceptions/GeneralErrorResponse';
 import { ERRORS } from '../constants/errors';
@@ -14,7 +13,7 @@ export class CreateUserService {
     this.userRepository = userRepository;
   }
 
-  async createUserService(body: createUserRequest) {
+  async createUserService(body: CreateUserRequest) {
     logger.info('IN - createUserService');
 
     const result = await this.userRepository.findUniqueByEmail(body.email);
@@ -26,24 +25,21 @@ export class CreateUserService {
       );
     }
 
-    const userData: UserModel = await buildUserData(body);
+    const userData = await buildUserData(body);
 
-    this.userRepository.create(userData);
+    const userCreatedId = this.userRepository.create(userData);
 
     logger.info('OUT - createUserService');
-    return userData.id;
+    return userCreatedId;
   }
 }
 
-async function buildUserData(body: createUserRequest) {
-  const userId = randomUUID();
-
+async function buildUserData(body: CreateUserRequest) {
   const passwordHash = await hash(body.password, 6);
 
   return {
-    id: userId,
     name: body.name,
     email: body.email,
-    password_hash: passwordHash,
+    password: passwordHash,
   };
 }
